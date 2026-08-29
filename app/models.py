@@ -1,0 +1,45 @@
+from .extensions import db
+
+service_ticket_mechanic = db.Table(
+    'service_ticket_mechanic',
+    db.Column('service_ticket_id', db.Integer, db.ForeignKey('service_tickets.id')),
+    db.Column('mechanic_id', db.Integer, db.ForeignKey('mechanics.id'))
+)
+
+class Customer(db.Model):
+    __tablename__ = 'customers'
+
+    id = db.Column(db.Integer, primary_key=True)
+    first_name = db.Column(db.String(255), nullable=False)
+    last_name = db.Column(db.String(255), nullable=False)
+    email = db.Column(db.String(255), nullable=False)
+    phone = db.Column(db.String(50), nullable=False)
+    address = db.Column(db.String(255), nullable=False)
+    service_tickets = db.relationship('ServiceTicket', backref='customer')
+
+class Mechanic(db.Model):
+    __tablename__ = 'mechanics'
+
+    id = db.Column(db.Integer, primary_key=True)
+    first_name = db.Column(db.String(255), nullable=False)
+    last_name = db.Column(db.String(255), nullable=False)
+    email = db.Column(db.String(255), nullable=False)
+    phone = db.Column(db.String(50), nullable=False)
+
+    service_tickets = db.relationship(
+        'ServiceTicket',
+        secondary=service_ticket_mechanic,
+        back_populates='mechanics'
+    )
+
+class ServiceTicket(db.Model):
+    __tablename__ = 'service_tickets'
+
+    id = db.Column(db.Integer, primary_key=True)
+    customer_id = db.Column(db.Integer, db.ForeignKey('customers.id'), nullable=False)
+
+    mechanics = db.relationship(
+        'Mechanic',
+        secondary=service_ticket_mechanic,
+        back_populates='service_tickets'
+    )
