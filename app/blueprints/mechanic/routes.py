@@ -9,13 +9,19 @@ from .schemas import MechanicSchema
 def get_mechanics():
     mechanics = Mechanic.query.all()
 
+    mechanics.sort(
+        key=lambda mechanic: len(mechanic.service_tickets),
+        reverse=True
+    )
+
     return jsonify([
         {
             'id': mechanic.id,
             'first_name': mechanic.first_name,
             'last_name': mechanic.last_name,
             'email': mechanic.email,
-            'phone': mechanic.phone
+            'phone': mechanic.phone,
+            'ticket_count': len(mechanic.service_tickets)
         }
         for mechanic in mechanics
     ])

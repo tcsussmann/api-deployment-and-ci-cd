@@ -10,3 +10,5 @@ class DevelopmentConfig:
         "@localhost/mechanic_shop"
     )
     SQLALCHEMY_TRACK_MODIFICATIONS = False
+    JWT_SECRET_KEY = os.getenv("JWT_SECRET_KEY")
+    CACHE_TYPE = "SimpleCache"

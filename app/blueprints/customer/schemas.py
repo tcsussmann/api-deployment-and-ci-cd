@@ -12,3 +12,7 @@ class CustomerSchema(SQLAlchemyAutoSchema):
         model = Customer
         load_instance = True
         sqla_session = db.session
+
+login_schema = CustomerSchema(
+    only=('email', 'password')
+)
