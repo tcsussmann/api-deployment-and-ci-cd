@@ -13,6 +13,21 @@ class DevelopmentConfig:
     JWT_SECRET_KEY = os.getenv("JWT_SECRET_KEY")
     CACHE_TYPE = "SimpleCache"
 
+class TestingConfig:
+
+    SQLALCHEMY_DATABASE_URI = os.getenv(
+        "DATABASE_URL",
+        f"mysql+mysqlconnector://root:{os.getenv('MYSQL_PASSWORD')}"
+        "@localhost/mechanic_shop_test"
+    )
+
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
+
+    JWT_SECRET_KEY = os.getenv("JWT_SECRET_KEY")
+
+    TESTING = True
+
+    CACHE_TYPE = "SimpleCache"
 
 class ProductionConfig:
     SQLALCHEMY_DATABASE_URI = os.environ.get("SQLALCHEMY_DATABASE_URI")
