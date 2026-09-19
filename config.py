@@ -16,4 +16,5 @@ class DevelopmentConfig:
 
 class ProductionConfig:
     SQLALCHEMY_DATABASE_URI = os.environ.get("SQLALCHEMY_DATABASE_URI")
+    JWT_SECRET_KEY = os.getenv("JWT_SECRET_KEY")
     CACHE_TYPE = "SimpleCache"
